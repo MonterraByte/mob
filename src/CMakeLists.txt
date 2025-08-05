@@ -6,8 +6,10 @@ file(GLOB_RECURSE header_files *.h)
 add_executable(mob ${source_files} ${header_files})
 set_target_properties(mob PROPERTIES CXX_STANDARD 20)
 
-target_compile_definitions(mob PUBLIC NOMINMAX)
-target_compile_options(mob PUBLIC "/MT")
+if(MSVC)
+    target_compile_definitions(mob PUBLIC NOMINMAX)
+    target_compile_options(mob PUBLIC "/MT")
+endif()
 target_include_directories(mob PUBLIC ${CMAKE_SOURCE_DIR}/third-party/include)
 target_link_libraries(mob PUBLIC
     wsock32 ws2_32 crypt32 wldap32 dbghelp shlwapi version
