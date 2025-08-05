@@ -10,13 +10,22 @@ if(MSVC)
     target_compile_definitions(mob PUBLIC NOMINMAX)
     target_compile_options(mob PUBLIC "/MT")
 endif()
-target_include_directories(mob PUBLIC ${CMAKE_SOURCE_DIR}/third-party/include)
+
+target_include_directories(mob PUBLIC ${CMAKE_SOURCE_DIR}/third-party/include-header-only)
 target_link_libraries(mob PUBLIC
-    wsock32 ws2_32 crypt32 wldap32 dbghelp shlwapi version
-    optimized ${CMAKE_SOURCE_DIR}/third-party/lib/libcurl.lib
-    debug ${CMAKE_SOURCE_DIR}/third-party/lib/libcurl-d.lib
-    optimized ${CMAKE_SOURCE_DIR}/third-party/lib/zlib.lib
-    debug ${CMAKE_SOURCE_DIR}/third-party/lib/zlibd.lib)
+    wsock32 ws2_32 crypt32 wldap32 dbghelp shlwapi version)
+
+if (MSVC)
+    target_include_directories(mob PUBLIC ${CMAKE_SOURCE_DIR}/third-party/include)
+    target_link_libraries(mob PUBLIC
+        optimized ${CMAKE_SOURCE_DIR}/third-party/lib/libcurl.lib
+        debug ${CMAKE_SOURCE_DIR}/third-party/lib/libcurl-d.lib
+        optimized ${CMAKE_SOURCE_DIR}/third-party/lib/zlib.lib
+        debug ${CMAKE_SOURCE_DIR}/third-party/lib/zlibd.lib)
+else()
+    find_package(CURL)
+    target_link_libraries(mob PUBLIC CURL::libcurl)
+endif()
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}
     PREFIX src
