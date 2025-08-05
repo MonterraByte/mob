@@ -6,8 +6,13 @@ namespace mob {
 #define MOB_WIDEN(x) MOB_WIDEN2(x)
 #define MOB_FILE_UTF16 MOB_WIDEN(__FILE__)
 
+#if defined(_MSC_VER)
 #define MOB_ASSERT(x, ...)                                                             \
     mob_assert(x, __VA_ARGS__, #x, MOB_FILE_UTF16, __LINE__, __FUNCSIG__);
+#else
+#define MOB_ASSERT(x, ...)                                                             \
+    mob_assert(x __VA_OPT__(,) __VA_ARGS__, #x, MOB_FILE_UTF16, __LINE__, __PRETTY_FUNCTION__);
+#endif
 
     void mob_assertion_failed(const char* message, const char* exp, const wchar_t* file,
                               int line, const char* func);
