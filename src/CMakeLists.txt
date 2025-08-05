@@ -9,6 +9,8 @@ set_target_properties(mob PROPERTIES CXX_STANDARD 20)
 if(MSVC)
     target_compile_definitions(mob PUBLIC NOMINMAX)
     target_compile_options(mob PUBLIC "/MT")
+else()
+    target_link_options(mob PUBLIC "-municode")
 endif()
 
 target_include_directories(mob PUBLIC ${CMAKE_SOURCE_DIR}/third-party/include-header-only)
