@@ -245,7 +245,9 @@ namespace mob {
 
     int help_command::do_run()
     {
+#if defined(_MSC_VER)
 #pragma warning(suppress : 4548)
+#endif
         auto doc = (command::common_options_group(), (clipp::value("command")));
 
         const auto master = default_ini_filename();

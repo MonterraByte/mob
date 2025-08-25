@@ -1,3 +1,4 @@
+#if defined(_MSC_VER)
 // global warnings
 #pragma warning(disable : 4464)  // relative include path
 #pragma warning(disable : 4820)  // padding added
@@ -43,6 +44,7 @@
 #pragma warning(disable : 4242)  // possible loss of data
 #pragma warning(disable : 4244)  // possible loss of data
 #pragma warning(disable : 4275)  // non dll-interface base
+#endif
 
 #include <array>
 #include <atomic>
@@ -72,7 +74,9 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 
 namespace mob {
 
